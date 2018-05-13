@@ -17,6 +17,7 @@ namespace WebApplication1.Controllers
             return View(ListQ);
         }
 
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
@@ -36,10 +37,42 @@ namespace WebApplication1.Controllers
                 quetstion.TimeQuestion = DateTime.Now;
                 RepQ.Add(quetstion);
                 RepQ.Save();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
         }
 
+        [HttpGet]
+        public ActionResult Read(int id)
 
+        {
+            GenericRepository<Questions> RepQ = new GenericRepository<Questions>();
+            Questions question = RepQ.FindBy(item => item.Id == id).FirstOrDefault();
+            return View(question);
+        }
+
+        [HttpGet]
+        public ActionResult Update(int id)
+        {
+            GenericRepository<Questions> RepQ = new GenericRepository<Questions>();
+            Questions quetstion = RepQ.FindBy(item => item.Id == id).FirstOrDefault();
+            return View(quetstion);
+        }
+
+        [HttpPost]
+        public ActionResult Update(Questions quetstion)
+        {
+            if (quetstion.Question == null || quetstion.UserMail == null || quetstion.UserName == null)
+            {
+                return View(quetstion);
+            }
+            else
+            {
+                GenericRepository<Questions> RepQ = new GenericRepository<Questions>();
+                RepQ.Edit(quetstion);
+                RepQ.Save();
+                return RedirectToAction("Index");
+                RepQ.
+            }
+        }
     }
 }

@@ -1,0 +1,58 @@
+﻿@model DomainModel.Questions
+
+@{
+    ViewBag.Title = "Отзывы и предложения";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Детализация по отзыву</title>
+</head>
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @using (Html.BeginForm())
+    {
+    <div>
+
+        <div class="dl-horizontal">
+            <h4>Детализация по отзыву</h4>
+            <hr />
+
+            <table class="table-bordered">
+                <tr>
+                    <td class="control-label col-md-2"> Идентификатор отзыва</td>
+                    <td class="col-md-10">@Html.DisplayFor(model => model.Id)</td>
+                </tr>
+                <tr>
+                    <td class="control-label col-md-2"> Время отзыва</td>
+                    <td class="col-md-10">@Html.DisplayFor(model => model.TimeQuestion)</td>
+                </tr>
+                <tr>
+                    <td class="control-label col-md-2"> Текст отзыва</td>
+                    <td class="col-md-10">@Html.DisplayFor(model => model.Question)</td>
+                </tr>
+                <tr>
+                    <td class="control-label col-md-2"> Имя пользователя</td>
+                    <td class="col-md-10">@Html.DisplayFor(model => model.UserName)</td>
+                </tr>
+                <tr>
+                    <td class="control-label col-md-2"> Электронная почта пользователя</td>
+                    <td class="col-md-10">@Html.DisplayFor(model => model.UserMail)</td>
+                </tr>
+            </table>
+
+        
+
+        </div>
+    </div>
+    }
+    <p> </p>
+    <div>
+        @Html.ActionLink("Вернуться к списку отзывов", "Index")
+    </div>
+</body>
+</html>

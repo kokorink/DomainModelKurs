@@ -11,6 +11,13 @@
         <title>Index</title>
     </head>
     <body>
+        <p> </p>
+        <div class="form-group">
+            <p class="btn btn-default">
+                @Html.ActionLink("Добавить отзыв", "Create", "Questions")
+            </p>
+        </div>
+
         <table class="table">
             <tr>
                 <th>
@@ -29,7 +36,7 @@
             </tr>
 
             @foreach (var item in Model)
-            {
+        {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.TimeQuestion)
@@ -46,7 +53,7 @@
                 </td>
 
             </tr>
-            }
+    }
 
         </table>
     </body>
