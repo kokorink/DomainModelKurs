@@ -1,0 +1,53 @@
+﻿@model IEnumerable<WebApplication1.Models.QAModel>
+    @{
+    ViewBag.Title = "Отзывы и предложения";
+    }
+
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Index</title>
+    </head>
+    <body>
+        <table class="table">
+            <tr>
+                <th>
+                    Время вопроса
+                </th>
+                <th>
+                    Вопрос
+                </th>
+                <th>
+                    Время ответа
+                </th>
+                <th>
+                    Ответ
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeQuestion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Question)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.TimeAnswer)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Answer)
+                </td>
+
+            </tr>
+            }
+
+        </table>
+    </body>
+</html>

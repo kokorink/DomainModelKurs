@@ -1,0 +1,66 @@
+﻿@model IEnumerable<DomainModel.Questions>
+@{
+    ViewBag.Title = "Отзывы и предложения";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <p> </p>
+    <div class="form-group">
+        <p class="btn btn-default">
+            @Html.ActionLink("Добавить отзыв", "Create")
+        </p>
+    </div>
+
+
+    <table class="table">
+        <tr>
+            <th>
+                Время вопроса
+            </th>
+            <th>
+                Вопрос
+            </th>
+            <th>
+                Имя пользователя
+            </th>
+            <th>
+                Электронная почта пользователя
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeQuestion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Question)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserMail)
+                </td>
+                <td>
+                    @Html.ActionLink("Просмотреть", "Read", new { id = item.Id }) |
+                    @Html.ActionLink("Изменить", "Update", new { id = item.Id }) |
+                    @Html.ActionLink("Удалить", "Delete", new { id = item.Id })
+                </td>
+
+            </tr>
+        }
+
+    </table>
+</body>
+</html>

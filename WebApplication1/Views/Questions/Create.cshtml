@@ -1,0 +1,67 @@
+﻿@model DomainModel.Questions
+
+@{
+    ViewBag.Title = "Отзывы и предложения";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Добавление отзыва</title>
+</head>
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    @using (Html.BeginForm())
+    {
+
+        <div class="form-horizontal">
+            <h4>Добавление отзыва</h4>
+            <hr />
+
+
+
+
+            <div class="form-group">
+                <p class = "control-label col-md-2"> Отзыв </p>            
+                <div class="col-md-10">
+
+                        @Html.EditorFor(model => model.Question )
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="control-label col-md-2"> Имя пользователя </p>
+                <div class="col-md-10">
+                        @Html.EditorFor(model => model.UserName)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <p class="control-label col-md-2"> Электронная почта </p>
+                <div class="col-md-10">
+                        @Html.EditorFor(model => model.UserMail)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Добавить отзыв" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Вернуться к списку", "Index")
+    </div>
+</body>
+</html>
+
+
+

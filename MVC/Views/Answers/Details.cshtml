@@ -1,0 +1,50 @@
+﻿@model DomainModel.Answers
+
+@{
+    ViewBag.Title = "Отзывы и предложения";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Answers</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Questions.Question)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Questions.Question)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.TimeAnswer)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.TimeAnswer)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Answer)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Answer)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.IdQuestions }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
