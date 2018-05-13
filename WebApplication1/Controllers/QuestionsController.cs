@@ -9,7 +9,7 @@ namespace WebApplication1.Controllers
 {
     public class QuestionsController : Controller
     {
-        // GET: Questions
+        [HttpGet]
         public ActionResult Index()
         {
             GenericRepository<Questions> RepQ = new GenericRepository<Questions>();
@@ -68,11 +68,20 @@ namespace WebApplication1.Controllers
             else
             {
                 GenericRepository<Questions> RepQ = new GenericRepository<Questions>();
-                //quetstion.TimeQuestion = DateTime.Now;
                 RepQ.Edit(quetstion);
                 RepQ.Save();
                 return RedirectToAction("Index");
             }
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int id)
+        {
+            GenericRepository<Questions> RepQ = new GenericRepository<Questions>();
+            Questions quetstion = RepQ.FindBy(item => item.Id == id).FirstOrDefault();
+            RepQ.Delete(quetstion);
+            RepQ.Save();
+            return RedirectToAction("Index");
         }
     }
 }
