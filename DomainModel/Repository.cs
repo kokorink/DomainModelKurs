@@ -55,10 +55,5 @@ namespace DomainModel
         {
             _entities.SaveChanges();
         }
-
-        public T GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

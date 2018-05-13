@@ -68,10 +68,10 @@ namespace WebApplication1.Controllers
             else
             {
                 GenericRepository<Questions> RepQ = new GenericRepository<Questions>();
+                //quetstion.TimeQuestion = DateTime.Now;
                 RepQ.Edit(quetstion);
                 RepQ.Save();
                 return RedirectToAction("Index");
-                RepQ.
             }
         }
     }
