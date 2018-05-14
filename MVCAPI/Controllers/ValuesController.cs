@@ -4,15 +4,16 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-
+using DomainModel;
 namespace MVCAPI.Controllers
 {
     public class ValuesController : ApiController
     {
+         IGenericRepository<Questions> RepQ= new GenericRepository<Questions>();
         // GET api/values
-        public IEnumerable<string> Get()
+        public IEnumerable<Questions> Get()
         {
-            return new string[] { "value1", "value2" };
+            return RepQ.GetAll();
         }
 
         // GET api/values/5
