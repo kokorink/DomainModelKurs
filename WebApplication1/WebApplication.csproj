@@ -206,10 +206,13 @@
     <Content Include="Views\Questions\Create.cshtml" />
     <Content Include="Views\Questions\Read.cshtml" />
     <Content Include="Views\Questions\Update.cshtml" />
+    <Content Include="Views\Answers\Index.cshtml" />
+    <Content Include="Views\Answers\Create.cshtml" />
+    <Content Include="Views\Answers\Read.cshtml" />
+    <Content Include="Views\Answers\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Answers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -1,0 +1,51 @@
+﻿@model DomainModel.Answers
+
+@{
+    ViewBag.Title = "Отзывы и предложения";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Детализация по ответу</title>
+</head>
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @using (Html.BeginForm())
+    {
+        <div>
+
+            <div class="dl-horizontal">
+                <h4>Детализация по отзыву</h4>
+                <hr />
+
+                <table class="table-bordered">
+                    <tr>
+                        <td class="control-label col-md-2"> Идентификатор отзыва</td>
+                        <td class="col-md-10">@Html.DisplayFor(model => model.IdQuestions)</td>
+                    </tr>
+                    <tr>
+                        <td class="control-label col-md-2"> Время ответа</td>
+                        <td class="col-md-10">@Html.DisplayFor(model => model.TimeAnswer)</td>
+                    </tr>
+                    <tr>
+                        <td class="control-label col-md-2"> Текст ответа</td>
+                        <td class="col-md-10">@Html.DisplayFor(model => model.Answer)</td>
+                    </tr>
+               
+                </table>
+
+
+
+            </div>
+        </div>
+    }
+    <p> </p>
+    <div>
+        @Html.ActionLink("Вернуться к списку ответов", "Index")
+    </div>
+</body>
+</html>

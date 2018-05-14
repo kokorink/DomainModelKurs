@@ -12,7 +12,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            GenericRepository<Questions> RepQ = new GenericRepository<Questions>();
+            IGenericRepository<Questions> RepQ = new GenericRepository<Questions>();
             List<Questions> ListQ = RepQ.GetAll().ToList();
             return View(ListQ);
         }
@@ -33,7 +33,7 @@ namespace WebApplication1.Controllers
             }
             else
             {
-                GenericRepository<Questions> RepQ = new GenericRepository<Questions>();
+                IGenericRepository<Questions> RepQ = new GenericRepository<Questions>();
                 quetstion.TimeQuestion = DateTime.Now;
                 RepQ.Add(quetstion);
                 RepQ.Save();
@@ -45,7 +45,7 @@ namespace WebApplication1.Controllers
         public ActionResult Read(int id)
 
         {
-            GenericRepository<Questions> RepQ = new GenericRepository<Questions>();
+            IGenericRepository<Questions> RepQ = new GenericRepository<Questions>();
             Questions question = RepQ.FindBy(item => item.Id == id).FirstOrDefault();
             return View(question);
         }
@@ -53,7 +53,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult Update(int id)
         {
-            GenericRepository<Questions> RepQ = new GenericRepository<Questions>();
+            IGenericRepository<Questions> RepQ = new GenericRepository<Questions>();
             Questions quetstion = RepQ.FindBy(item => item.Id == id).FirstOrDefault();
             return View(quetstion);
         }
@@ -67,7 +67,7 @@ namespace WebApplication1.Controllers
             }
             else
             {
-                GenericRepository<Questions> RepQ = new GenericRepository<Questions>();
+                IGenericRepository<Questions> RepQ = new GenericRepository<Questions>();
                 RepQ.Edit(quetstion);
                 RepQ.Save();
                 return RedirectToAction("Index");
@@ -77,7 +77,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            GenericRepository<Questions> RepQ = new GenericRepository<Questions>();
+            IGenericRepository<Questions> RepQ = new GenericRepository<Questions>();
             Questions quetstion = RepQ.FindBy(item => item.Id == id).FirstOrDefault();
             RepQ.Delete(quetstion);
             RepQ.Save();

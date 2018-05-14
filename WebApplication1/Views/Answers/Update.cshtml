@@ -1,0 +1,53 @@
+﻿@model DomainModel.Answers
+
+@{
+    ViewBag.Title = "Отзывы и предложения";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Изменение ответа</title>
+</head>
+<body>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+
+
+    @using (Html.BeginForm())
+    {
+
+    <div class="form-horizontal">
+        <h4>Обновите ответ</h4>
+        <hr />
+
+        <div class="form-group">
+            <p class="control-label col-md-2"> Отзыв </p>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Answer, new { htmlAttributes = new { @class = "form-control" } })
+
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.IdQuestions)
+        @Html.HiddenFor(model => model.TimeAnswer)
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Сохранить изменения" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+    }
+
+    <div>
+        @Html.ActionLink("Перейти к списку ответов", "Index")
+    </div>
+</body>
+</html>
+
+
+
