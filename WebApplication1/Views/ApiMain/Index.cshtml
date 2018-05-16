@@ -1,0 +1,351 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        GetAllQuestions();
+    });
+
+    // Получение всех вопросы по ajax-запросу
+    function GetAllQuestions() {
+        $.ajax({
+            url: '/api/questions/',
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+
+                WriteResponse(data);
+            }
+        });
+    }
+
+    // вывод полученных данных на экран
+    function WriteResponse(questions) {
+        var strResult = "<table class='table table-striped'><tr><th> Время вопроса</th><th>Вопрос</th><th>Имя пользователя</th><th>Электронная почта пользователя</th></tr>";
+        $.each(questions, function (index, question) {
+
+            strResult += "<tr><td>" + question.TimeQuestion + "</td><td>" + question.Question + "</td><td>" +
+                question.UserName + "</td><td>" + question.UserMail + "</td><td> " +
+
+                "<a data-item='" + question.Id + "' onclick='ViewItem(this);'>Просмотреть</a> | " +
+                "<a data-item='" + question.Id + "' onclick='EditItem(this);'>Изменить</a> | " +
+                "<a data-item='" + question.Id + "' onclick='DeleteItem(this);'>Удалить</a> </td> </tr>"
+                ;
+        });
+        strResult += "</table>";
+        $("#tableBlock").html(strResult);
+
+    }
+
+    function ViewItem(el) {
+        var id = $(el).attr('data-item');
+        $.ajax({
+            url: '/api/questions/' + id,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $("#ViewItemId").html(data.Id);
+                $("#ViewItemTime").html(data.TimeQuestion);
+                $("#ViewItemText").html(data.Question);
+                $("#ViewItemName").html(data.UserName);
+                $("#ViewItemEmail").html(data.UserMail);
+                $("#tableBlock").hide();
+                $("#ViewElement").show();
+                $("#AddButton").hide();
+
+
+            }
+        });
+    }
+
+    // обработчик редактирования
+    function EditItem(el) {
+        // получаем id редактируемого объекта
+        var id = $(el).attr('data-item');
+
+
+        $.ajax({
+            url: '/api/questions/' + id,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                $("#EditId").val(data.Id);
+                $("#EditTime").val(data.TimeQuestion);
+
+                $("#EditQuestion").val(data.Question);
+                $("#EditUserName").val(data.UserName);
+                $("#EditMail").val(data.UserMail);
+
+                $("#tableBlock").hide();
+                $("#EditElement").show();
+                $("#AddButton").hide();
+
+            }
+        });
+    }
+
+    // обработчик редактирования
+    function DeleteItem(el) {
+        // получаем id редактируемого объекта
+        var id = $(el).attr('data-item');
+
+    }
+    function ReturnTable() {
+        $("#tableBlock").show();
+        $("#ViewElement").hide();
+        $("#ViewElement").html("");
+        $("#AddButton").show();
+    }
+
+    function ExitEdit() {
+        $("#tableBlock").show();
+        $("#EditElement").hide();
+        $("#AddButton").show();
+    }
+
+    function SaveEdit() {
+        var id = $('#EditId').val();
+
+        var question = {
+            Id: $('#EditId').val(),
+            TimeQuestion: $('#EditTime').val(),
+            Question: $('#EditQuestion').val(),
+            UserName: $('#EditUserName').val(),
+            UserMail: $('#EditMail').val()
+        };
+
+        $.ajax({
+            url: '/api/questions/' + id,
+            type: 'PUT',
+            data: JSON.stringify(question),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                GetAllQuestions();
+                ExitEdit(); 
+                $("#AddQuestion").val('');
+                $("#AddName").val('');
+                $("#AddEmail").val('');  
+            }
+        });
+
+    }
+
+
+    function AddCall() {
+        $('#modalNew').modal();
+    }
+
+
+    function AddQuestion() {
+        var question = {
+            Question: $('#AddQuestion').val(),
+            UserName: $('#AddName').val(),
+            UserMail: $('#AddEmail').val()
+        };
+
+        $.ajax({
+            url: '/api/questions/',
+            type: 'POST',
+            data: JSON.stringify(question),
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                $('#modalNew').modal('hide');
+                GetAllQuestions();
+            }
+        });
+
+    }
+
+    // обработчик удаления
+    function DeleteItem(el) {
+        // получаем id удаляемого объекта
+        var id = $(el).attr('data-item');
+        $("#exampleInputDeleteId").val(id);
+        $('#modalDelete').modal();
+    }
+       //// Удаление категории
+    function DeleteQuestion() {
+        var id = $('#exampleInputDeleteId').val(); 
+        $.ajax({
+            url: '/api/questions/' + id,
+            type: 'DELETE',
+            contentType: "application/json;charset=utf-8",
+            success: function (data) {
+                $('#modalDelete').modal('hide');
+                GetAllQuestions();
+            } 
+        });
+    }
+</script>
+
+<h2>Работа с API</h2>
+<div class="form-group">
+    <a class="btn btn-default" id="AddButton" onclick='AddCall();'>Добавить отзыв</a>
+</div>
+<div id="tableBlock"></div>
+
+<div id="ViewElement" style="display:none;">
+
+    <div class="dl-horizontal">
+        <h4>Детализация по отзыву</h4>
+        <hr />
+
+        <table class="table-bordered">
+            <tr>
+                <td class="control-label col-md-2"> Идентификатор отзыва</td>
+                <td class="col-md-10" id="ViewItemId"></td>
+            </tr>
+            <tr>
+                <td class="control-label col-md-2"> Время отзыва</td>
+                <td class="col-md-10" id="ViewItemTime"></td>
+            </tr>
+            <tr>
+                <td class="control-label col-md-2"> Текст отзыва</td>
+                <td class="col-md-10" id="ViewItemText"></td>
+            </tr>
+            <tr>
+                <td class="control-label col-md-2"> Имя пользователя</td>
+                <td class="col-md-10" id="ViewItemName"></td>
+            </tr>
+            <tr>
+                <td class="control-label col-md-2"> Электронная почта пользователя</td>
+                <td class="col-md-10" id="ViewItemEmail"></td>
+            </tr>
+        </table>
+
+
+
+    </div>
+    <a onclick='ReturnTable();'>Вернуться к списку отзывов</a>
+</div>
+
+
+
+
+<div id="EditElement" style="display:none;">
+    <div class="form-horizontal">
+        <h4>Пожалуйста, заполните все поля</h4>
+        <hr />
+
+        <div class="form-group">
+            <p class="control-label col-md-2"> Отзыв </p>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="EditQuestion" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-2"> Имя пользователя </p>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="EditUserName" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-2"> Электронная почта </p>
+            <div class="col-md-10">
+                <input type="text" class="form-control" id="EditMail" />
+
+            </div>
+        </div>
+
+
+        <input type="hidden" class="form-control" id="EditId" />
+        <input type="hidden" class="form-control" id="EditTime" />
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input value="Сохранить изменения" class="btn btn-default" onclick='SaveEdit();' />
+            </div>
+        </div>
+
+    </div>
+    <a onclick='ExitEdit();'>Отмена</a>
+</div>
+
+
+<div class="modal fade" id="modalNew" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4>Добавление отзыва</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group has-feedback">
+                        <div class="row" style="margin: 8px 0px 0px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <label class="control-label" for="AddQuestion">Отзыв</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <input class="form-control input-sm" id="AddQuestion" placeholder="Отзыв" value="" type="text">
+                                <span class="form-control-feedback glyphicon" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin: 8px 0px 0px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <label class="control-label" for="AddName">Имя</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <input class="form-control input-sm" id="AddName" placeholder="Имя" value="" type="text">
+                                <span class="form-control-feedback glyphicon" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                        <div class="row" style="margin: 8px 0px 0px;">
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <label class="control-label" for="AddEmail">Email</label>
+                            </div>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                                <input class="form-control input-sm" id="AddEmail" placeholder="Email" value="" type="text">
+                                <span class="form-control-feedback glyphicon" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input value="Сохранить" class="btn btn-success btn-sm" onclick="AddQuestion();" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<style>
+    .okcircle {
+        margin: 0px auto;
+        color: green;
+        font-size: 60px;
+        width: 100px;
+        height: 100px; 
+      
+    }
+</style>
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">Удаление</h4>
+                </div>
+                <div class="modal-body text-center">
+                    <input class="form-control input-sm" id="exampleInputDeleteId" placeholder="Название" value="" type="hidden">
+                    <div class="okcircle"><span class="glyphicon glyphicon-trash" style="margin: 17px; color: #d9534f;"></span></div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-danger" onclick="DeleteQuestion();">Да</a>
+                    <button type="button" class="btn btn-success " style="margin-right:230px;" data-dismiss="modal" aria-hidden="true">Нет</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
