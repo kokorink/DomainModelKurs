@@ -26,9 +26,8 @@
     // вывод полученных данных на экран
     function WriteResponse(questions) {
         var strResult = "<table class='table table-striped'><tr><th> Время вопроса</th><th>Вопрос</th><th>Имя пользователя</th><th>Электронная почта пользователя</th></tr>";
-        $.each(questions, function (index, question) {
-
-            strResult += "<tr><td>" + question.TimeQuestion + "</td><td>" + question.Question + "</td><td>" +
+        $.each(questions, function (index, question) { 
+            strResult += "<tr><td>" + ToJavaScriptDate(question.TimeQuestion)  + "</td><td>" + question.Question + "</td><td>" +
                 question.UserName + "</td><td>" + question.UserMail + "</td><td> " +
 
                 "<a data-item='" + question.Id + "' onclick='ViewItem(this);'>Просмотреть</a> | " +
@@ -126,9 +125,11 @@
             success: function (data) {
                 GetAllQuestions();
                 ExitEdit(); 
-                $("#AddQuestion").val('');
-                $("#AddName").val('');
-                $("#AddEmail").val('');  
+                $("#EditQuestion").val('');
+                $("#EditUserName").val('');
+                $("#EditMail").val('');  
+                $("#EditId").val(''); 
+                $("#EditTime").val(''); 
             }
         });
 
@@ -155,6 +156,9 @@
             success: function (data) {
                 $('#modalNew').modal('hide');
                 GetAllQuestions();
+                $("#AddQuestion").val('');
+                $("#AddName").val('');
+                $("#AddEmail").val('');  
             }
         });
 
@@ -179,6 +183,12 @@
                 GetAllQuestions();
             } 
         });
+    }
+
+    function ToJavaScriptDate(value) {
+        var dt = new Date(value);  
+      
+        return dt.getFullYear() + '-' + ('0' + (dt.getMonth() + 1)).slice(-2) + '-' + ('0' + dt.getDate()).slice(-2) + "  " + ('0' + (dt.getHours() + 1)).slice(-2) + ":" + ('0' + (dt.getMinutes() + 1)).slice(-2);
     }
 </script>
 
