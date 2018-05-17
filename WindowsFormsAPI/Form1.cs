@@ -15,18 +15,25 @@ namespace WindowsFormsAPI
 {
     public partial class Form1 : Form
     {
+        Questions question = new Questions();
         private string App_path = "http://localhost:27043/";
         public Form1()
         {
             InitializeComponent();
             IEnumerable<Questions> ss = new List<Questions>() { new Questions() { Id = 1, Question = "sf", TimeQuestion = DateTime.Now, UserMail = "sdf", UserName = "sdf" } };
 
-          //  var items = GetQuestions();
-            dataGridView1.DataSource = ss;
+            var items = GetQuestions();
+            dataGridView1.DataSource = items;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            AddEditForm f = new AddEditForm();
+            f.ShowDialog();
+            AddQuestionApi(f.item);
+
+            var items = GetQuestions();
+            dataGridView1.DataSource = items;
 
         }
 
@@ -39,11 +46,11 @@ namespace WindowsFormsAPI
             }
         }
          
-        public Questions GetId(int id)
+        public Questions GetIdApi(int id)
         {
             using (var client = new HttpClient())
             { 
-                var response = client.GetAsync(App_path + "api/questions/id").Result;
+                var response = client.GetAsync(App_path + "api/questions/" + id).Result;
                 return JsonConvert.DeserializeObject<Questions>(response.Content.ReadAsStringAsync().Result); 
             }
         }
@@ -59,37 +66,49 @@ namespace WindowsFormsAPI
 
         public void AddQuestionApi(Questions question)
         {
+            question.TimeQuestion = DateTime.Now;
             using (var client = new HttpClient())
             {
-                var response = client.PostAsJsonAsync(App_path + "/api/question/", question).Result;
+                var response = client.PostAsJsonAsync(App_path + "/api/questions/", question).Result;
             }
         }
 
-        public void DeleteCategoryApi(int id)
+        public void DeleteQuestionApi(int id)
         {
             using (var client = new HttpClient())
             {
-                var response = client.DeleteAsync(App_path + "/api/category/" + id).Result;
+                var response = client.DeleteAsync(App_path + "/api/questions/" + id).Result;
             }
         }
 
-        private void dataGridView1_NewRowNeeded(object sender, DataGridViewRowEventArgs e)
-        {
-
-        }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;
-
+            var indexItem = Convert.ToInt16(senderGrid.Rows[e.RowIndex].Cells[0].Value.ToString());
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0)
             {
                 var but = (DataGridViewButtonColumn)senderGrid.Columns[e.ColumnIndex];
                 if (but.Text == "Изменить")
-                  but.DataPropertyName
-                
-                    var x = 1;
+                {
+                    question = GetIdApi(indexItem);
+                    AddEditForm f = new AddEditForm(question);
+                    f.ShowDialog();
+                    EditQuestionApi(f.item);
+
+
+            }
+
+            else
+            {
+                    DeleteQuestionApi(indexItem);
+
+            }
+
+            var items = GetQuestions();
+                dataGridView1.DataSource = items;
+
             }
         }
     }

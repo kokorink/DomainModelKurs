@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonAddQuestion = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.questionsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -38,8 +38,8 @@
             this.questionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.userMailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Удаление = new System.Windows.Forms.DataGridViewButtonColumn();
             this.Редактирование = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Удаление = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -57,24 +57,24 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.button1);
+            this.splitContainer1.Panel1.Controls.Add(this.buttonAddQuestion);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
-            this.splitContainer1.Size = new System.Drawing.Size(800, 450);
+            this.splitContainer1.Size = new System.Drawing.Size(703, 450);
             this.splitContainer1.SplitterDistance = 48;
             this.splitContainer1.TabIndex = 0;
             // 
-            // button1
+            // buttonAddQuestion
             // 
-            this.button1.Location = new System.Drawing.Point(13, 13);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(112, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonAddQuestion.Location = new System.Drawing.Point(13, 13);
+            this.buttonAddQuestion.Name = "buttonAddQuestion";
+            this.buttonAddQuestion.Size = new System.Drawing.Size(112, 23);
+            this.buttonAddQuestion.TabIndex = 0;
+            this.buttonAddQuestion.Text = "Добавить";
+            this.buttonAddQuestion.UseVisualStyleBackColor = true;
+            this.buttonAddQuestion.Click += new System.EventHandler(this.button1_Click);
             // 
             // dataGridView1
             // 
@@ -88,17 +88,17 @@
             this.questionDataGridViewTextBoxColumn,
             this.userNameDataGridViewTextBoxColumn,
             this.userMailDataGridViewTextBoxColumn,
-            this.Удаление,
-            this.Редактирование});
+            this.Редактирование,
+            this.Удаление});
             this.dataGridView1.DataSource = this.questionsBindingSource;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(800, 398);
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.Size = new System.Drawing.Size(703, 398);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            this.dataGridView1.NewRowNeeded += new System.Windows.Forms.DataGridViewRowEventHandler(this.dataGridView1_NewRowNeeded);
             // 
             // questionsBindingSource
             // 
@@ -139,31 +139,33 @@
             this.userMailDataGridViewTextBoxColumn.Name = "userMailDataGridViewTextBoxColumn";
             this.userMailDataGridViewTextBoxColumn.ReadOnly = true;
             // 
-            // Удаление
-            // 
-            this.Удаление.DataPropertyName = "Id";
-            this.Удаление.HeaderText = "Удаление";
-            this.Удаление.Name = "Удаление";
-            this.Удаление.ReadOnly = true;
-            this.Удаление.Text = "Удалить";
-            // 
             // Редактирование
             // 
             this.Редактирование.DataPropertyName = "Id";
-            this.Редактирование.HeaderText = "Редактирование";
+            this.Редактирование.HeaderText = "";
             this.Редактирование.Name = "Редактирование";
             this.Редактирование.ReadOnly = true;
             this.Редактирование.Text = "Изменить";
             this.Редактирование.UseColumnTextForButtonValue = true;
             // 
+            // Удаление
+            // 
+            this.Удаление.DataPropertyName = "Id";
+            this.Удаление.HeaderText = "";
+            this.Удаление.Name = "Удаление";
+            this.Удаление.ReadOnly = true;
+            this.Удаление.Text = "Удалить";
+            this.Удаление.UseColumnTextForButtonValue = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(703, 450);
             this.Controls.Add(this.splitContainer1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Отзывы";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
@@ -177,7 +179,7 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonAddQuestion;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.BindingSource questionsBindingSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
@@ -185,8 +187,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn questionDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn userNameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn userMailDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewButtonColumn Удаление;
         private System.Windows.Forms.DataGridViewButtonColumn Редактирование;
+        private System.Windows.Forms.DataGridViewButtonColumn Удаление;
     }
 }
 
